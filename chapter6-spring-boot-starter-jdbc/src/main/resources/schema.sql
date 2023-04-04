@@ -1,0 +1,5 @@
+create table singer(
+   ID INT NOT NULL AUTO_INCREMENT
+    , NAME VARCHAR(60) NOT NULL
+    , PRIMARY KEY (ID)
+);

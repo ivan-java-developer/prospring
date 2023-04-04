@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <aop:config proxy-target-class="true">
+        <aop:pointcut id="pointcut"
+          expression="execution(* com.prospring.ch5..sing*(com.prospring.ch5.name_match_method_pointcut.Guitar))" />
+
+        <aop:aspect ref="advice">
+            <aop:before method="before" pointcut-ref="pointcut" />
+        </aop:aspect>
+    </aop:config>
+
+    <bean id="advice" class="com.prospring.ch5.simple_aop_xml_config.SimpleAdvice"/>
+    <bean id="documentarist" class="com.prospring.ch5.proxy_factory_bean.Documentarist">
+        <property name="dep" ref="guitarist"/>
+    </bean>
+    <bean id="guitarist" class="com.prospring.ch5.name_match_method_pointcut.GrammyGuitarist"/>
+</beans>

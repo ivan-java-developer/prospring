@@ -1,0 +1,14 @@
+rootProject.name = 'prospring'
+
+include 'chapter2:hello-world'
+include 'chapter4'
+include 'chapter5'
+include 'chapter6'
+include 'chapter6-spring-boot-starter-jdbc'
+include 'chapter7'
+include 'chapter8'
+include 'chapter8-spring-boot-starter-jpa'
+include 'chapter9'
+include 'chapter9-spring-boot'
+include 'chapter10'
+

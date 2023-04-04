@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.apress.prospring5.ch2.collection" />
+
+    <bean id="song" class="com.apress.prospring5.ch2.music.Song">
+        <property name="title" ref="childTitle"/>
+    </bean>
+
+    <bean id="childTitle" class="java.lang.String">
+        <constructor-arg value="child title" index="0" />
+    </bean>
+
+    <util:map id="map" map-class="java.util.HashMap">
+        <entry key="song" value-ref="song" />
+        <entry key="other song" value-ref="song" />
+    </util:map>
+
+    <util:list id="list" list-class="java.util.ArrayList">
+        <value>Hello</value>
+        <value>World</value>
+        <ref bean="song" />
+    </util:list>
+
+    <util:set id="set" set-class="java.util.HashSet">
+        <value>World</value>
+        <ref bean="song" />
+    </util:set>
+
+    <util:properties id="properties">
+        <prop key="username">sysdba</prop>
+        <prop key="password">masterkey</prop>
+    </util:properties>
+
+<!--    <bean id="collectionInjection" class="com.apress.prospring5.ch2.collection.CollectionInjection">-->
+<!--&lt;!&ndash;        <property name="map" ref="map" />&ndash;&gt;-->
+<!--&lt;!&ndash;        <property name="list" ref="list" />&ndash;&gt;-->
+<!--&lt;!&ndash;        <property name="set" ref="set" />&ndash;&gt;-->
+<!--&lt;!&ndash;        <property name="properties" ref="properties" />&ndash;&gt;-->
+<!--    </bean>-->
+</beans>

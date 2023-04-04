@@ -1,0 +1,17 @@
+*.log
+*.iml
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+*.class
+
+.gradle
+.idea
+
+build
+out
+target
+META-INF

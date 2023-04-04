@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd" >
+
+    <bean id="song" class="com.apress.prospring5.ch2.music.Song">
+        <property name="title" ref="childTitle"/>
+    </bean>
+
+    <bean id="childTitle" class="java.lang.String">
+        <constructor-arg value="child title" index="0" />
+    </bean>
+
+    <bean id="collectionInjection" class="com.apress.prospring5.ch2.collection.CollectionInjection">
+        <property name="map">
+            <map>
+                <entry key="song" value-ref="song" />
+                <entry key="other song" value-ref="song" />
+            </map>
+        </property>
+        <property name="list">
+            <list>
+                <value>Hello</value>
+                <ref bean="song" />
+            </list>
+        </property>
+        <property name="set">
+            <set>
+                <ref bean="song" />
+                <value>World</value>
+            </set>
+        </property>
+        <property name="properties">
+            <props>
+                <prop key="username">admin</prop>
+                <prop key="password">secret</prop>
+            </props>
+        </property>
+    </bean>
+</beans>

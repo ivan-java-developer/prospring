@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util
+        https://www.springframework.org/schema/util/spring-util.xsd">
+
+    <context:annotation-config/>
+
+    <context:property-placeholder location="classpath:application.properties"/>
+
+    <bean id="customEditorConfigurer" class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+        <property name="propertyEditorRegistrars" ref="propertyEditorRegistrarsList"/>
+    </bean>
+
+    <util:list id="propertyEditorRegistrarsList">
+        <bean class="com.prospring.ch10.converters.DateTimeEditorRegistrar">
+            <constructor-arg name="dateFormatPattern" value="${date.format.pattern}"/>
+        </bean>
+    </util:list>
+
+    <bean id="eric" class="com.prospring.ch10.objects.Singer">
+        <property name="firstName" value="Eric"/>
+        <property name="lastName" value="Clapton"/>
+        <property name="birthDate" value="30-03-1945"/>
+        <property name="site" value="http://www.ericclapton.com"/>
+    </bean>
+
+    <bean id="countrySinger" class="com.prospring.ch10.objects.Singer">
+        <property name="firstName" value="${countrySinger.firstName}"/>
+        <property name="lastName" value="${countrySinger.lastName}"/>
+        <property name="birthDate" value="${countrySinger.birthDate}"/>
+        <property name="site" value="${countrySinger.site}"/>
+    </bean>
+</beans>

@@ -1,0 +1,17 @@
+dependencies {
+    implementation 'org.springframework:spring-context:5.3.23'
+}
+
+def mainClassName = "com.prospring.ch2.HelloWorldSpringDI"
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    manifest {
+        attributes "Main-Class": "$mainClassName"
+    }
+
+    from {
+        configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
+    }
+}

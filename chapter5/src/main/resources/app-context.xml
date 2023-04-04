@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean id="guitarist" class="com.prospring.ch5.name_match_method_pointcut.GrammyGuitarist"/>
+
+    <bean id="advice" class="com.prospring.ch5.control_flow_pointcut.SimpleBeforeAdvice"/>
+
+    <bean id="proxyOne" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target" ref="guitarist"/>
+        <property name="interceptorNames" ref="advices"/>
+        <property name="optimize" value="true"/>
+    </bean>
+
+    <util:list id="advices">
+        <value>advice</value>
+    </util:list>
+
+    <bean id="proxyTwo" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target" ref="guitarist"/>
+        <property name="interceptorNames" ref="advisors"/>
+        <property name="optimize" value="true"/>
+    </bean>
+
+    <util:list id="advisors">
+        <value>advisor</value>
+    </util:list>
+
+    <bean id="advisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+        <property name="advice" ref="advice"/>
+        <property name="pointcut">
+            <bean class="org.springframework.aop.aspectj.AspectJExpressionPointcut">
+                <property name="expression" value="execution(* sing(..))"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="documentaristOne" class="com.prospring.ch5.proxy_factory_bean.Documentarist">
+        <property name="dep" ref="proxyOne"/>
+    </bean>
+
+    <bean id="documentaristTwo" class="com.prospring.ch5.proxy_factory_bean.Documentarist">
+        <property name="dep" ref="proxyTwo"/>
+    </bean>
+</beans>

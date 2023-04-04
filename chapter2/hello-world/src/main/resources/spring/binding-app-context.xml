@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="foo1" class="com.apress.prospring5.ch2.binding.Foo" lazy-init="true" primary="true" />
+    <bean id="foo2" class="com.apress.prospring5.ch2.binding.Foo" lazy-init="true" />
+<!--    <bean id="bar" class="com.apress.prospring5.ch2.binding.Bar" lazy-init="true" />-->
+
+<!--    <bean id="target" class="com.apress.prospring5.ch2.binding.Target"-->
+<!--          lazy-init="true" autowire="byType" />-->
+
+        <bean id="targetTwo" class="com.apress.prospring5.ch2.binding.TargetTwo"
+              lazy-init="true" autowire="byType" />
+</beans>

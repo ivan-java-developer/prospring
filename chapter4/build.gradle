@@ -1,0 +1,16 @@
+plugins {
+    id 'groovy'
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-gradle-plugin:3.0.0'
+    implementation 'org.springframework.boot:spring-boot-starter:3.0.0'
+    implementation 'org.springframework.boot:spring-boot-starter-web:3.0.0'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator:3.0.0'
+    implementation 'javax.inject:javax.inject:1'
+    implementation 'org.apache.groovy:groovy-all:4.0.6'
+}
+
+subprojects {
+    group 'com.prospring.ch4'
+}
