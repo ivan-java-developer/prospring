@@ -11,4 +11,5 @@ include 'chapter8-spring-boot-starter-jpa'
 include 'chapter9'
 include 'chapter9-spring-boot'
 include 'chapter10'
+include 'chapter11'
 

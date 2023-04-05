@@ -1,0 +1,2 @@
+java 17 vm option:
+--add-opens java.base/java.lang=ALL-UNNAMED
