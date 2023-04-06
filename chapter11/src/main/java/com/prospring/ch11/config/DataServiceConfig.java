@@ -44,8 +44,8 @@ public class DataServiceConfig {
         hibernateProps.setProperty("hibernate.jdbc.fetch_size", "50");
         hibernateProps.setProperty("hibernate.jdbc.batch_size", "10");
         hibernateProps.setProperty("hibernate.hbm2ddl.auto", "create-drop");
-        hibernateProps.setProperty("hibernate.format_sql", "true");
-        hibernateProps.setProperty("hibernate.use_sql_comments", "true");
+//        hibernateProps.setProperty("hibernate.format_sql", "true");
+//        hibernateProps.setProperty("hibernate.use_sql_comments", "true");
         return hibernateProps;
     }
 
