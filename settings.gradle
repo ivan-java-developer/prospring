@@ -14,4 +14,5 @@ include 'chapter10'
 include 'chapter11'
 include 'chapter12-spring-http'
 include 'chapter12-jms'
+include 'chapter12-spring-boot-jms'
 
