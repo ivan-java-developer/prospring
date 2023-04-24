@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.prospring.ch12.entities.Singer;
 import com.prospring.ch12.entities.Singers;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -71,6 +72,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean
     public XStreamMarshaller xStreamMarshaller() {
         XStreamMarshaller xStreamMarshaller = new XStreamMarshaller();
+        xStreamMarshaller.setStreamDriver(new DomDriver());
         xStreamMarshaller.setAnnotatedClasses(Singer.class, Singers.class);
         xStreamMarshaller.getXStream().addDefaultImplementation(java.util.Date.class, java.sql.Date.class);
         return xStreamMarshaller;

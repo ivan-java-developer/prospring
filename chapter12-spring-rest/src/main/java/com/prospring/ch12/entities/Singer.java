@@ -1,5 +1,6 @@
 package com.prospring.ch12.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.prospring.ch12.DateConverter;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
@@ -36,6 +37,7 @@ public class Singer implements Serializable {
     @Column(name = "last_name")
     private String lastName;
 
+    @JsonFormat(pattern = "dd-MM-yyyy")
     @XStreamConverter(DateConverter.class)
     @Temporal(TemporalType.DATE)
     @Column(name = "birth_date")
