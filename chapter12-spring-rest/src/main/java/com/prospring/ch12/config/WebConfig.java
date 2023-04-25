@@ -75,6 +75,7 @@ public class WebConfig implements WebMvcConfigurer {
         xStreamMarshaller.setStreamDriver(new DomDriver());
         xStreamMarshaller.setAnnotatedClasses(Singer.class, Singers.class);
         xStreamMarshaller.getXStream().addDefaultImplementation(java.util.Date.class, java.sql.Date.class);
+        xStreamMarshaller.getXStream().allowTypes(new Class[] {Singer.class});
         return xStreamMarshaller;
     }
 }

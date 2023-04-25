@@ -15,6 +15,7 @@ dependencies {
     implementation 'org.springframework:spring-oxm:5.3.23'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
     implementation 'com.thoughtworks.xstream:xstream:1.4.20'
+    implementation 'org.apache.httpcomponents:httpclient:4.5.14'
     compileOnly 'javax.servlet:servlet-api:2.5'
     implementation 'com.h2database:h2:2.1.214'
     implementation 'com.google.guava:guava:31.1-jre'
