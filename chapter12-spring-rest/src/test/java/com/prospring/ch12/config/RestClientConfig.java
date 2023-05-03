@@ -3,8 +3,13 @@ package com.prospring.ch12.config;
 import com.prospring.ch12.entities.Singer;
 import com.prospring.ch12.entities.Singers;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.Credentials;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -21,12 +26,24 @@ import java.util.List;
 public class RestClientConfig {
 
     @Bean
+    public Credentials credentials() {
+        return new UsernamePasswordCredentials("prospring", "secret");
+    }
+
+    @Bean
+    public CredentialsProvider credentialsProvider() {
+        BasicCredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+        credentialsProvider.setCredentials(AuthScope.ANY, credentials());
+        return credentialsProvider;
+    }
+
+    @Bean
     public HttpComponentsClientHttpRequestFactory httpRequestFactory() {
-        HttpComponentsClientHttpRequestFactory httpRequestFactory =
-                new HttpComponentsClientHttpRequestFactory();
-        HttpClient httpClient = HttpClientBuilder.create().build();
-        httpRequestFactory.setHttpClient(httpClient);
-        return httpRequestFactory;
+        CloseableHttpClient client = HttpClients
+                .custom()
+                .setDefaultCredentialsProvider(credentialsProvider())
+                .build();
+        return new HttpComponentsClientHttpRequestFactory(client);
     }
 
     @Bean
