@@ -16,4 +16,5 @@ include 'chapter12-spring-http'
 include 'chapter12-jms'
 include 'chapter12-spring-boot-jms'
 include 'chapter12-spring-rest'
+include 'chapter12-spring-boot-rest'
 
