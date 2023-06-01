@@ -21,4 +21,5 @@ include 'chapter12-spring-amqp'
 include 'chapter12-spring-boot-amqp'
 include 'chapter13'
 include 'chapter14'
+include 'chapter15'
 
