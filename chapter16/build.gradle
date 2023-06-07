@@ -1,0 +1,31 @@
+plugins {
+    id 'war'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework:spring-webmvc:5.3.23'
+    implementation 'org.springframework.data:spring-data-jpa:2.7.5'
+    implementation 'org.springframework.security:spring-security-config:5.7.5'
+    implementation 'org.springframework.security:spring-security-taglibs:5.7.5'
+    implementation 'org.hibernate:hibernate-entitymanager:5.6.15.Final'
+    implementation 'org.hibernate:hibernate-validator:5.0.0.Final'
+    implementation 'javax.validation:validation-api:2.0.1.Final'
+    implementation 'javax.servlet:javax.servlet-api:4.0.1'
+    implementation 'jstl:jstl:1.2'
+    implementation 'com.h2database:h2:2.1.214'
+    implementation 'com.google.guava:guava:31.1-jre'
+    implementation 'commons-io:commons-io:2.11.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+test {
+    useJUnitPlatform()
+}
