@@ -14,6 +14,12 @@
     <spring:message code="label_singer_last_name" var="labelSingerLastName"/>
     <spring:message code="label_singer_birth_date" var="labelSingerBirthDate"/>
 
+    <head>
+        <spring:theme code="styleSheet" var="appCss"/>
+        <spring:url value="/${appCss}" var="appCssUrl"/>
+        <link rel="stylesheet" type="text/css" href="${appCssUrl}"/>
+    </head>
+
     <h1>${labelSingerList}</h1>
 
     <c:if test="${not empty singers}">
