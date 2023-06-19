@@ -19,6 +19,7 @@ dependencies {
     implementation 'javax.validation:validation-api:2.0.1.Final'
     implementation 'javax.servlet:javax.servlet-api:4.0.1'
     implementation 'jstl:jstl:1.2'
+    implementation 'org.apache.tiles:tiles-jsp:3.0.8'
     implementation 'com.h2database:h2:2.1.214'
     implementation 'com.google.guava:guava:31.1-jre'
     implementation 'commons-io:commons-io:2.11.0'

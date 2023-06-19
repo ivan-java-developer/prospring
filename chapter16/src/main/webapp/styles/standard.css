@@ -418,3 +418,11 @@ fieldset th {
     height: 11px;
     width: 16px;
 }
+
+form{
+    box-sizing:border-box;
+}
+
+form input{
+    width:96%;
+}
