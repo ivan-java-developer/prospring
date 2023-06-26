@@ -1,7 +1,8 @@
 package com.prospring.ch16.entities;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,16 +19,15 @@ public class Singer {
     @Column(name = "version")
     private int version;
 
-    @NotBlank(message = "{validation.firstname.NotEmpty.message}")
     @Size(min = 3, max = 60, message = "{validation.firstname.Size.message}")
     @Column(name = "first_name")
     private String firstName;
 
-    @NotBlank(message = "{validation.lastname.NotEmpty.message}")
     @Size(min = 1, max = 40, message = "{validation.lastname.Size.message}")
     @Column(name = "last_name")
     private String lastName;
 
+    @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
     @Temporal(TemporalType.DATE)
     @Column(name = "birth_date")
     private Date birthDate;
