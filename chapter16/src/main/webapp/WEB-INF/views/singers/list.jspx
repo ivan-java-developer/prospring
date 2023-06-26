@@ -31,6 +31,7 @@
                 <th>${labelSingerFirstName}</th>
                 <th>${labelSingerLastName}</th>
                 <th>${labelSingerBirthDate}</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -39,6 +40,7 @@
                     <td><a href="${showSingerUrl}/${singer.id}">${singer.firstName}</a></td>
                     <td>${singer.lastName}</td>
                     <td><fmt:formatDate value="${singer.birthDate}"/></td>
+                    <td><a href="${showSingerUrl}/${singer.id}/delete">-=delete=-</a></td>
                 </tr>
             </c:forEach>
             </tbody>

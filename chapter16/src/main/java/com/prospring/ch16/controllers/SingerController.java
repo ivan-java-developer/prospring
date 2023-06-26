@@ -98,6 +98,14 @@ public class SingerController {
         return "singers/create";
     }
 
+    @GetMapping("/{id}/delete")
+    public String delete(@PathVariable("id") Long id) {
+        logger.info("Deleting singer with id = " + id);
+        Singer singer = singerService.findById(id);
+        singerService.delete(singer);
+        return "redirect:/singers";
+    }
+
     @Autowired
     public void setSingerService(SingerService singerService) {
         this.singerService = singerService;

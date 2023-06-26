@@ -39,6 +39,10 @@ public class SingerServiceImpl implements SingerService {
         return singerRepository.findAll(pageable);
     }
 
+    public void delete(Singer singer) {
+        singerRepository.delete(singer);
+    }
+
     @Autowired
     public void setSingerRepository(SingerRepository singerRepository) {
         this.singerRepository = singerRepository;
