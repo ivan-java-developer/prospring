@@ -3,11 +3,16 @@ package com.prospring.ch16.controllers;
 import com.prospring.ch16.entities.Singer;
 import com.prospring.ch16.services.SingerService;
 import com.prospring.ch16.util.Message;
+import com.prospring.ch16.util.SingerGrid;
 import com.prospring.ch16.util.UrlUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,6 +39,47 @@ public class SingerController {
         model.addAttribute("singers", singers);
         logger.info("No. of singers: " + singers.size());
         return "singers/list";
+    }
+
+
+    @GetMapping(value = "/listgrid",
+            consumes = {MediaType.ALL_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public @ResponseBody SingerGrid listGrid(@RequestParam(value = "page", required = false) Integer page,
+                                               @RequestParam(value = "rows", required = false) Integer rows,
+                                               @RequestParam(value = "sidx", required = false) String sortBy,
+                                               @RequestParam(value = "sord", required = false) String order) {
+
+        logger.info("Listing singers for grid with page: {}, rows: {}", page, rows);
+        logger.info("Listing singers for grid with sort: {}, order: {}", sortBy, order);
+
+        Sort sort = null;
+        String orderBy = sortBy;
+        if (order != null && orderBy.equals("birthDateString")) {
+            orderBy = "birthDate";
+        }
+        if (orderBy != null && order != null) {
+            if (order.equalsIgnoreCase("DESC")) {
+                sort = Sort.by(Sort.Direction.DESC, orderBy);
+            } else {
+                sort = Sort.by(Sort.Direction.ASC, orderBy);
+            }
+        }
+
+        PageRequest pageRequest = null;
+        if (sort != null) {
+            pageRequest = PageRequest.of(page - 1, rows, sort);
+        } else {
+            pageRequest = PageRequest.of(page - 1, rows);
+        }
+
+        Page<Singer> singerPage = singerService.findAllByPage(pageRequest);
+
+        SingerGrid singerGrid = new SingerGrid();
+        singerGrid.setCurrentPage(singerPage.getNumber() + 1);
+        singerGrid.setTotalPages(singerPage.getTotalPages());
+        singerGrid.setTotalRecords(singerPage.getTotalElements());
+        singerGrid.setSingerData(singerPage.stream().toList());
+        return singerGrid;
     }
 
     @GetMapping("/{id}")
