@@ -5,6 +5,7 @@ import com.prospring.ch16.services.SingerService;
 import com.prospring.ch16.util.Message;
 import com.prospring.ch16.util.SingerGrid;
 import com.prospring.ch16.util.UrlUtil;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Locale;
 
@@ -96,10 +100,10 @@ public class SingerController {
         return "singers/update";
     }
 
-    @PostMapping(value = "{id}", params = "form")
+    @PostMapping(value = "{id}", params = "form", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public String update(@Valid @ModelAttribute("singer") Singer singer, BindingResult bindingResult, Model model,
                          HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes,
-                         Locale locale) {
+                         Locale locale, @RequestParam(value = "file", required = false) Part file) {
         logger.info("Updating singer");
         if (bindingResult.hasErrors()) {
             model.addAttribute("message",
@@ -112,15 +116,35 @@ public class SingerController {
         redirectAttributes.addFlashAttribute("message",
                 new Message("success",
                         messageSource.getMessage("singer_save_success", null, locale)));
+
+        byte[] fileContent = null;
+        if (file != null && file.getSize() != 0) {
+            logger.info("File name: {}", file.getName());
+            logger.info("File size: {}", file.getSize());
+            logger.info("File content type: {}", file.getContentType());
+            try (InputStream inputStream = file.getInputStream()) {
+                if (inputStream != null) {
+                    fileContent = IOUtils.toByteArray(inputStream);
+                } else {
+                    logger.info("File input stream is null");
+                }
+            } catch (IOException e) {
+                logger.error("Error updating uploaded file");
+            }
+        } else {
+            fileContent = singerService.findById(singer.getId()).getPhoto();
+        }
+        singer.setPhoto(fileContent);
+
         singerService.save(singer);
         return "redirect:/singers/"
                 + UrlUtil.encodeUrlPathSegment(singer.getId().toString(), httpServletRequest);
     }
 
-    @PostMapping
+    @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public String create(@Valid @ModelAttribute("singer") Singer singer, BindingResult bindingResult, Model model,
                          HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes,
-                         Locale locale) {
+                         Locale locale, @RequestParam(value = "file", required = false) Part file) {
         logger.info("Creating singer");
         if (bindingResult.hasErrors()) {
             model.addAttribute("message",
@@ -133,8 +157,38 @@ public class SingerController {
         redirectAttributes.addFlashAttribute("message",
                 new Message("success",
                         messageSource.getMessage("singer_save_success", null, locale)));
+
+        byte[] fileContent = null;
+        if (file != null) {
+            logger.info("File name: {}", file.getName());
+            logger.info("File size: {}", file.getSize());
+            logger.info("File content type: {}", file.getContentType());
+            try (InputStream inputStream = file.getInputStream()) {
+                if (inputStream != null) {
+                     fileContent = IOUtils.toByteArray(inputStream);
+                } else {
+                    logger.info("File input stream is null");
+                }
+            } catch (IOException e) {
+                logger.error("Error saving uploaded file");
+            }
+        }
+        singer.setPhoto(fileContent);
         singerService.save(singer);
         return "redirect:/singers/";
+    }
+
+    @GetMapping("/photo/{id}")
+    public @ResponseBody byte[] downloadPhoto(@PathVariable("id") Long id) {
+        Singer singer = singerService.findById(id);
+        if (singer == null) {
+            return null;
+        }
+        if (singer.getPhoto() != null) {
+            logger.info("Downloading photo for id: {} with size: {}",
+                    singer.getId(), singer.getPhoto().length);
+        }
+        return singer.getPhoto();
     }
 
     @GetMapping(params = "form")

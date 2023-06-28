@@ -8,6 +8,8 @@ import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.Filter;
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletRegistration;
 
 public class WebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
@@ -34,5 +36,15 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
         CharacterEncodingFilter encodingFilter = new CharacterEncodingFilter("UTF-8", true);
         HiddenHttpMethodFilter methodFilter = new HiddenHttpMethodFilter();
         return new Filter[] {methodFilter, encodingFilter};
+    }
+
+    @Override
+    protected void customizeRegistration(ServletRegistration.Dynamic registration) {
+        registration.setMultipartConfig(getMultipartConfigElement());
+    }
+
+    private MultipartConfigElement getMultipartConfigElement() {
+        return new MultipartConfigElement(
+                null, 5_000_000, 5_000_000, 0);
     }
 }

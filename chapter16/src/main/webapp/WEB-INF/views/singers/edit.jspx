@@ -39,7 +39,7 @@
     <h1>${formTitle}</h1>
 
     <div id="singerUpdate">
-        <form:form modelAttribute="singer" id="singerUpdateForm" method="post" enctype="text/json">
+        <form:form modelAttribute="singer" id="singerUpdateForm" method="post" enctype="multipart/form-data">
 
         <c:if test="${not empty message}">
                 <div id="message" class="${message.type}">${message.message}</div>
