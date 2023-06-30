@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -93,6 +94,7 @@ public class SingerController {
         return "singers/show";
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping(value = "/{id}", params = "form")
     public String updateForm(@PathVariable("id") Long id, Model model) {
         Singer singer = singerService.findById(id);
@@ -100,6 +102,7 @@ public class SingerController {
         return "singers/update";
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping(value = "{id}", params = "form", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public String update(@Valid @ModelAttribute("singer") Singer singer, BindingResult bindingResult, Model model,
                          HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes,
@@ -141,6 +144,7 @@ public class SingerController {
                 + UrlUtil.encodeUrlPathSegment(singer.getId().toString(), httpServletRequest);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public String create(@Valid @ModelAttribute("singer") Singer singer, BindingResult bindingResult, Model model,
                          HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes,
@@ -191,6 +195,7 @@ public class SingerController {
         return singer.getPhoto();
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping(params = "form")
     public String createForm(Model model) {
         Singer singer = new Singer();
@@ -198,6 +203,7 @@ public class SingerController {
         return "singers/create";
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/{id}/delete")
     public String delete(@PathVariable("id") Long id) {
         logger.info("Deleting singer with id = " + id);

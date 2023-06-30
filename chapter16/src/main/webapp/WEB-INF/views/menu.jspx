@@ -14,7 +14,9 @@
     <spring:url var="loginUrl" value="/login" />
 
     <h3>${menuHeaderText}</h3>
-    <a href="${addsingerUrl}"><h3>${menuAddsinger}</h3></a>
+    <sec:authorize access="hasRole('ROLE_USER')">
+        <a href="${addsingerUrl}"><h3>${menuAddsinger}</h3></a>
+    </sec:authorize>
 
     <sec:authorize access="isAnonymous()">
         <div id="login">
