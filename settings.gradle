@@ -24,4 +24,5 @@ include 'chapter14'
 include 'chapter15'
 include 'chapter16'
 include 'chapter17-websocket-xml'
+include 'chapter17-websocket-java-config'
 
